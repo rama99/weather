@@ -4,4 +4,5 @@
 ## ASP.NET MVC
 ## SQL Server 2012
 ## Angular 2
+## Entity Framework
 
