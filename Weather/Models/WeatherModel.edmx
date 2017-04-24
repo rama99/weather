@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DB_WEATHERModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="COUNTRY">
+          <Key>
+            <PropertyRef Name="country_id" />
+          </Key>
+          <Property Name="country_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="country_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="is_active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DESCRIPTION">
+          <Key>
+            <PropertyRef Name="description_id" />
+          </Key>
+          <Property Name="description_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="image" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="is_active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PLACE">
+          <Key>
+            <PropertyRef Name="place_id" />
+          </Key>
+          <Property Name="place_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="country_id" Type="int" Nullable="false" />
+          <Property Name="place_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="is_active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WEATHER">
+          <Key>
+            <PropertyRef Name="weather_id" />
+          </Key>
+          <Property Name="weather_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="place_id" Type="int" Nullable="false" />
+          <Property Name="weather_date" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="min" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="max" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="description_id" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_PLACE_COUNTRY">
+          <End Role="COUNTRY" Type="Self.COUNTRY" Multiplicity="1" />
+          <End Role="PLACE" Type="Self.PLACE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COUNTRY">
+              <PropertyRef Name="country_id" />
+            </Principal>
+            <Dependent Role="PLACE">
+              <PropertyRef Name="country_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WEATHER_DESCRIPTION">
+          <End Role="DESCRIPTION" Type="Self.DESCRIPTION" Multiplicity="1" />
+          <End Role="WEATHER" Type="Self.WEATHER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DESCRIPTION">
+              <PropertyRef Name="description_id" />
+            </Principal>
+            <Dependent Role="WEATHER">
+              <PropertyRef Name="description_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WEATHER_PLACE">
+          <End Role="PLACE" Type="Self.PLACE" Multiplicity="1" />
+          <End Role="WEATHER" Type="Self.WEATHER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PLACE">
+              <PropertyRef Name="place_id" />
+            </Principal>
+            <Dependent Role="WEATHER">
+              <PropertyRef Name="place_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_WEATHERModelStoreContainer">
+          <EntitySet Name="COUNTRY" EntityType="Self.COUNTRY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DESCRIPTION" EntityType="Self.DESCRIPTION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PLACE" EntityType="Self.PLACE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WEATHER" EntityType="Self.WEATHER" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_PLACE_COUNTRY" Association="Self.FK_PLACE_COUNTRY">
+            <End Role="COUNTRY" EntitySet="COUNTRY" />
+            <End Role="PLACE" EntitySet="PLACE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WEATHER_DESCRIPTION" Association="Self.FK_WEATHER_DESCRIPTION">
+            <End Role="DESCRIPTION" EntitySet="DESCRIPTION" />
+            <End Role="WEATHER" EntitySet="WEATHER" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WEATHER_PLACE" Association="Self.FK_WEATHER_PLACE">
+            <End Role="PLACE" EntitySet="PLACE" />
+            <End Role="WEATHER" EntitySet="WEATHER" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_WEATHERModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="COUNTRY">
+          <Key>
+            <PropertyRef Name="country_id" />
+          </Key>
+          <Property Name="country_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="country_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="is_active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="PLACEs" Relationship="Self.FK_PLACE_COUNTRY" FromRole="COUNTRY" ToRole="PLACE" />
+        </EntityType>
+        <EntityType Name="DESCRIPTION">
+          <Key>
+            <PropertyRef Name="description_id" />
+          </Key>
+          <Property Name="description_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="description1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="image" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="is_active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="WEATHERs" Relationship="Self.FK_WEATHER_DESCRIPTION" FromRole="DESCRIPTION" ToRole="WEATHER" />
+        </EntityType>
+        <EntityType Name="PLACE">
+          <Key>
+            <PropertyRef Name="place_id" />
+          </Key>
+          <Property Name="place_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="country_id" Type="Int32" Nullable="false" />
+          <Property Name="place_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="is_active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="COUNTRY" Relationship="Self.FK_PLACE_COUNTRY" FromRole="PLACE" ToRole="COUNTRY" />
+          <NavigationProperty Name="WEATHERs" Relationship="DB_WEATHERModel.FK_WEATHER_PLACE" FromRole="PLACE" ToRole="WEATHER" />
+        </EntityType>
+        <EntityType Name="WEATHER">
+          <Key>
+            <PropertyRef Name="weather_id" />
+          </Key>
+          <Property Name="weather_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="place_id" Type="Int32" Nullable="false" />
+          <Property Name="weather_date" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="min" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="max" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="description_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DESCRIPTION" Relationship="Self.FK_WEATHER_DESCRIPTION" FromRole="WEATHER" ToRole="DESCRIPTION" />
+          <NavigationProperty Name="PLACE" Relationship="DB_WEATHERModel.FK_WEATHER_PLACE" FromRole="WEATHER" ToRole="PLACE" />
+        </EntityType>
+        <Association Name="FK_PLACE_COUNTRY">
+          <End Role="COUNTRY" Type="Self.COUNTRY" Multiplicity="1" />
+          <End Role="PLACE" Type="Self.PLACE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COUNTRY">
+              <PropertyRef Name="country_id" />
+            </Principal>
+            <Dependent Role="PLACE">
+              <PropertyRef Name="country_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WEATHER_DESCRIPTION">
+          <End Role="DESCRIPTION" Type="Self.DESCRIPTION" Multiplicity="1" />
+          <End Role="WEATHER" Type="Self.WEATHER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DESCRIPTION">
+              <PropertyRef Name="description_id" />
+            </Principal>
+            <Dependent Role="WEATHER">
+              <PropertyRef Name="description_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_WEATHEREntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="COUNTRies" EntityType="Self.COUNTRY" />
+          <EntitySet Name="DESCRIPTIONs" EntityType="Self.DESCRIPTION" />
+          <EntitySet Name="PLACEs" EntityType="Self.PLACE" />
+          <EntitySet Name="WEATHERs" EntityType="Self.WEATHER" />
+          <AssociationSet Name="FK_PLACE_COUNTRY" Association="Self.FK_PLACE_COUNTRY">
+            <End Role="COUNTRY" EntitySet="COUNTRies" />
+            <End Role="PLACE" EntitySet="PLACEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WEATHER_DESCRIPTION" Association="Self.FK_WEATHER_DESCRIPTION">
+            <End Role="DESCRIPTION" EntitySet="DESCRIPTIONs" />
+            <End Role="WEATHER" EntitySet="WEATHERs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WEATHER_PLACE" Association="DB_WEATHERModel.FK_WEATHER_PLACE">
+            <End Role="PLACE" EntitySet="PLACEs" />
+            <End Role="WEATHER" EntitySet="WEATHERs" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_WEATHER_PLACE">
+          <End Type="DB_WEATHERModel.PLACE" Role="PLACE" Multiplicity="1" />
+          <End Type="DB_WEATHERModel.WEATHER" Role="WEATHER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PLACE">
+              <PropertyRef Name="place_id" />
+            </Principal>
+            <Dependent Role="WEATHER">
+              <PropertyRef Name="place_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_WEATHERModelStoreContainer" CdmEntityContainer="DB_WEATHEREntities">
+          <EntitySetMapping Name="COUNTRies">
+            <EntityTypeMapping TypeName="DB_WEATHERModel.COUNTRY">
+              <MappingFragment StoreEntitySet="COUNTRY">
+                <ScalarProperty Name="country_id" ColumnName="country_id" />
+                <ScalarProperty Name="country_name" ColumnName="country_name" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DESCRIPTIONs">
+            <EntityTypeMapping TypeName="DB_WEATHERModel.DESCRIPTION">
+              <MappingFragment StoreEntitySet="DESCRIPTION">
+                <ScalarProperty Name="description_id" ColumnName="description_id" />
+                <ScalarProperty Name="description1" ColumnName="description" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PLACEs">
+            <EntityTypeMapping TypeName="DB_WEATHERModel.PLACE">
+              <MappingFragment StoreEntitySet="PLACE">
+                <ScalarProperty Name="place_id" ColumnName="place_id" />
+                <ScalarProperty Name="country_id" ColumnName="country_id" />
+                <ScalarProperty Name="place_name" ColumnName="place_name" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WEATHERs">
+            <EntityTypeMapping TypeName="DB_WEATHERModel.WEATHER">
+              <MappingFragment StoreEntitySet="WEATHER">
+                <ScalarProperty Name="weather_id" ColumnName="weather_id" />
+                <ScalarProperty Name="place_id" ColumnName="place_id" />
+                <ScalarProperty Name="weather_date" ColumnName="weather_date" />
+                <ScalarProperty Name="min" ColumnName="min" />
+                <ScalarProperty Name="max" ColumnName="max" />
+                <ScalarProperty Name="description_id" ColumnName="description_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

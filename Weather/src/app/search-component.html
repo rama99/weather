@@ -1,0 +1,36 @@
+﻿<h2> Today's Weather </h2>
+
+<form class="form-inline">
+   
+    <div class="form-group">
+        <label>Country</label>
+        <select class="form-control" (change)="selectCountry($event.target.value)">
+            <option value="-1">Select Country</option>
+            <!--  -->
+            <option *ngFor="let country of countries$ | async" [value]="country.country_id">
+                    {{country.country_name}}
+            </option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Place</label>
+        <select class="form-control" (change)="selectPlace($event.target.value)">
+            <option value="-1">Select Place</option>
+            <option *ngFor="let place of places$ | async" [value]="place.place_id">
+                {{place.place_name}}
+            </option>
+        </select>
+    </div>
+    <br />
+   
+</form>
+<br />
+<div class="row" *ngIf="report?.place_name">
+    <label> Place: </label>{{report?.place_name}}<br />
+    <label> Min: </label>{{report?.min}} C<br />
+    <label> Max: </label>{{report?.max}} C<br />
+    <label> Description: </label>{{report?.description}}<br />
+    <img class="img-thumbnail img-circle" [src]="'./images/' + report?.description_image" />
+    
+</div>

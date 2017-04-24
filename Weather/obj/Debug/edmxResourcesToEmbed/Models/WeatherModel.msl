@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DB_WEATHERModelStoreContainer" CdmEntityContainer="DB_WEATHEREntities">
+    <EntitySetMapping Name="COUNTRies">
+      <EntityTypeMapping TypeName="DB_WEATHERModel.COUNTRY">
+        <MappingFragment StoreEntitySet="COUNTRY">
+          <ScalarProperty Name="country_id" ColumnName="country_id" />
+          <ScalarProperty Name="country_name" ColumnName="country_name" />
+          <ScalarProperty Name="is_active" ColumnName="is_active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DESCRIPTIONs">
+      <EntityTypeMapping TypeName="DB_WEATHERModel.DESCRIPTION">
+        <MappingFragment StoreEntitySet="DESCRIPTION">
+          <ScalarProperty Name="description_id" ColumnName="description_id" />
+          <ScalarProperty Name="description1" ColumnName="description" />
+          <ScalarProperty Name="image" ColumnName="image" />
+          <ScalarProperty Name="is_active" ColumnName="is_active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PLACEs">
+      <EntityTypeMapping TypeName="DB_WEATHERModel.PLACE">
+        <MappingFragment StoreEntitySet="PLACE">
+          <ScalarProperty Name="place_id" ColumnName="place_id" />
+          <ScalarProperty Name="country_id" ColumnName="country_id" />
+          <ScalarProperty Name="place_name" ColumnName="place_name" />
+          <ScalarProperty Name="is_active" ColumnName="is_active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WEATHERs">
+      <EntityTypeMapping TypeName="DB_WEATHERModel.WEATHER">
+        <MappingFragment StoreEntitySet="WEATHER">
+          <ScalarProperty Name="weather_id" ColumnName="weather_id" />
+          <ScalarProperty Name="place_id" ColumnName="place_id" />
+          <ScalarProperty Name="weather_date" ColumnName="weather_date" />
+          <ScalarProperty Name="min" ColumnName="min" />
+          <ScalarProperty Name="max" ColumnName="max" />
+          <ScalarProperty Name="description_id" ColumnName="description_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
